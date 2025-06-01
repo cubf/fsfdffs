@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IQ Тест</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 to-blue-100 min-h-screen py-10 px-4">
+  <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl p-10 fade-in">
+    <h1 class="text-4xl font-bold mb-8 text-center text-indigo-700">Псевдо IQ Тест 🤓</h1>
+    <p class="text-center text-gray-600 mb-8">Ответь на 30 "умных" вопросов и узнай... абсолютно ничего 😁</p>
+
+    <div id="quiz" class="space-y-10"></div>
+
+    <div class="mt-10 text-center">
+      <button id="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-xl text-lg hover:bg-indigo-700 transition-all">Завершить тест</button>
+    </div>
+
+    <div id="result" class="mt-10 text-center text-2xl font-bold text-red-600 hidden"></div>
+  </div>
+
+  <script>
+    const quizData = Array.from({ length: 30 }, (_, i) => ({
+      question: `Вопрос ${i + 1}: Какая фигура или число логически завершает последовательность?`,
+      options: ["A", "B", "C", "D"]
+    }));
+
+    const quizContainer = document.getElementById("quiz");
+
+    quizData.forEach((q, index) => {
+      const questionBlock = document.createElement("div");
+      questionBlock.classList.add("p-4", "bg-gray-50", "rounded-xl", "shadow-sm");
+
+      const optionsHTML = q.options.map(opt => `
+        <label class="block text-gray-700">
+          <input type="radio" name="q${index}" value="${opt}" class="mr-2">
+          ${opt}
+        </label>
+      `).join("");
+
+      questionBlock.innerHTML = `
+        <p class="font-semibold mb-3">${q.question}</p>
+        <div class="space-y-2">${optionsHTML}</div>
+      `;
+
+      quizContainer.appendChild(questionBlock);
+    });
+
+    document.getElementById("submit").addEventListener("click", () => {
+      const resultDiv = document.getElementById("result");
+      resultDiv.textContent = "Ваш IQ: 0 (¯\\u005f(ツ)_/¯) — но вы молодец, что дошли до конца!";
+      resultDiv.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
